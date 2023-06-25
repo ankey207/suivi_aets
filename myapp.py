@@ -150,11 +150,11 @@ if uploaded_files is not None:
             tableau_repartition_CO['Nombre de plants plantés'] = tableau_repartition_CO['Nombre de plants plantés'].apply(lambda x: '{:.0f}'.format(x))
             st.table(tableau_repartition_CO.style.applymap(cooling_highlight,subset=['progression']))
                    
-    except :
-    #except Exception as e:
+    #except :
+    except Exception as e:
     # Affiche l'erreur complète dans Streamlit
-        #st.exception(e)
-        st.warning("Il semble que le fichier n'est pas conforme. S'il vous plaît, veuillez réessayer. ", icon="⚠️")
+        st.exception(e)
+        #st.warning("Il semble que le fichier n'est pas conforme. S'il vous plaît, veuillez réessayer. ", icon="⚠️")
 
 
 footer="""<style>
