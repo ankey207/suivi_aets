@@ -126,7 +126,7 @@ if uploaded_files is not None:
 
             # Affichage du tableau avec Streamlit
 
-            st.markdown("<h1 style='text-align: center;color: green;'>TABLEAU DE SUIVI PAR ZONE</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align: center;color: green;'>TABLEAU DE SUIVI PAR ZONES</h1>", unsafe_allow_html=True)
             st.table(tableau_repartition.style.applymap(cooling_highlight,subset=['progression']))
 
 
@@ -144,16 +144,16 @@ if uploaded_files is not None:
             tableau_repartition_CO = suivi_journalier_CO.groupby(['Equipe','Nom de la coopérative'], as_index=False).agg(agg_functions)
             tableau_repartition_CO['progression'] = (tableau_repartition_CO['Nombre de plants reçus'] / tableau_repartition_CO['Nom de la coopérative'].map(objectifs_CO)) * 100
             tableau_repartition_CO['progression']  = tableau_repartition_CO['progression'].apply(lambda x: '{:.2f}%'.format(x))
-            st.markdown("<h1 style='text-align: center;color: green;'>TABLEAU DE SUIVI PAR COOPERATIVE</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align: center;color: green;'>TABLEAU DE SUIVI PAR COOPERATIVES</h1>", unsafe_allow_html=True)
             tableau_repartition_CO['Nombre de plants reçus'] = tableau_repartition_CO['Nombre de plants reçus'].apply(lambda x: '{:.0f}'.format(x))
             tableau_repartition_CO['Nombre de plants plantés'] = tableau_repartition_CO['Nombre de plants plantés'].apply(lambda x: '{:.0f}'.format(x))
             st.table(tableau_repartition_CO.style.applymap(cooling_highlight,subset=['progression']))
                    
-    #except :
-    except Exception as e:
+    except :
+    #except Exception as e:
     # Affiche l'erreur complète dans Streamlit
-        st.exception(e)
-        #st.warning("Il semble que le fichier n'est pas conforme. S'il vous plaît, veuillez réessayer. ", icon="⚠️")
+        #st.exception(e)
+        st.warning("Il semble que le fichier n'est pas conforme. S'il vous plaît, veuillez réessayer. ", icon="⚠️")
 
 
 footer="""<style>
