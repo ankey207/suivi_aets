@@ -79,15 +79,20 @@ with z1:
     st.title(":green[Choisissez le fichier de données:]")
 with z2:
     uploaded_files = st.file_uploader(":blue[Choisissez le fichier de données:]",accept_multiple_files=True,type=["xlsx", "xls"],label_visibility='hidden')
+
 if uploaded_files is not None:
-    try:
-        if uploaded_files is not None:
+    if len(uploaded_files) ==0 :
+        st.info("Cette application vous permet suivre les statistiques de collecte.", icon="ℹ️")
+    else:
+        try:
             uploaded_file = uploaded_files[0]
             df = pd.read_excel(uploaded_file)
             
             df['Equipe'] = df['Région'].apply(get_region)
             nouvelles_colonnes = {'VIII_Q35a: Nombre de plants reçus: Depuis le début des distributions ? (Cohorte 2020-2021)': 'Nombre de plants reçus', 'VIII_Q35b: Nombre de plants effectivement plantés': 'Nombre de plants plantés','I_Q1: Nom et prénoms du répondant':'Nombre de producteurs'}
             df = df.rename(columns=nouvelles_colonnes)
+            df.loc[df["_id"] == 249698465, "Nombre de plants reçus"] = 120
+            df.loc[df["_id"] == 249698524, "Nombre de plants plantés"] = 60
 
             # Créer un DataFrame avec les colonnes pertinentes pour le suivi journalier
 
@@ -147,14 +152,12 @@ if uploaded_files is not None:
             st.markdown("<h1 style='text-align: center;color: green;'>TABLEAU DE SUIVI PAR COOPERATIVES</h1>", unsafe_allow_html=True)
             tableau_repartition_CO['Nombre de plants reçus'] = tableau_repartition_CO['Nombre de plants reçus'].apply(lambda x: '{:.0f}'.format(x))
             tableau_repartition_CO['Nombre de plants plantés'] = tableau_repartition_CO['Nombre de plants plantés'].apply(lambda x: '{:.0f}'.format(x))
-            st.table(tableau_repartition_CO.style.applymap(cooling_highlight,subset=['progression']))
-                   
-    except :
-    #except Exception as e:
-    # Affiche l'erreur complète dans Streamlit
-        #st.exception(e)
-        st.warning("Il semble que le fichier n'est pas conforme. S'il vous plaît, veuillez réessayer. ", icon="⚠️")
-
+            st.table(tableau_repartition_CO.style.applymap(cooling_highlight,subset=['progression']))                       
+        except :
+        #except Exception as e:
+        # Affiche l'erreur complète dans Streamlit
+            #st.exception(e)
+            st.warning("Il semble que le fichier n'est pas conforme. S'il vous plaît, veuillez réessayer. ", icon="⚠️")
 
 footer="""<style>
     a:link , a:visited{
