@@ -93,6 +93,8 @@ if uploaded_files is not None:
             df = df.rename(columns=nouvelles_colonnes)
             df.loc[df["_id"] == 249698465, "Nombre de plants reçus"] = 120
             df.loc[df["_id"] == 249698524, "Nombre de plants plantés"] = 60
+            df.loc[df["_id"] == 249578302, "Nombre de plants plantés"] = 20
+
 
             # Créer un DataFrame avec les colonnes pertinentes pour le suivi journalier
 
